@@ -1,5 +1,8 @@
 # Coerce
 
+[![hex.pm version](https://img.shields.io/hexpm/v/coerce.svg)](https://hex.pm/packages/coerce)
+[![Build Status](https://travis-ci.org/Qqwy/elixir-coercei.svg?branch=master)](https://travis-ci.org/Qqwy/elixir-coerce)
+
   Coerce allows defining coercions between data types.
 
   These are standardized conversions of one kind of data to another.
