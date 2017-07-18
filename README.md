@@ -15,6 +15,7 @@
   Coerce does _not_ come with built-in coercions, instead allowing libraries that build on top of it
   to define their own rules.
 
+
 ## Examples
 
 ```elixir
