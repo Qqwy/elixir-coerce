@@ -3,7 +3,7 @@
   Coerce allows defining coercions between data types.
 
   These are standardized conversions of one kind of data to another.
-  A coercion can be defined using `defcoercion`.
+  A coercion can be defined using `defcoercion.
 
   The code that coercion is compiled to attempts to ensure that the result
   is relatively fast (with the possibility for further optimization in the future).
