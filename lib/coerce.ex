@@ -16,6 +16,42 @@ defmodule Coerce do
     is_port: Port,
     is_reference: Reference]
 
+  @doc """
+  Performs value coercion,
+
+  the simpler of the two values is converted into
+  a more complex type, and the result is returned as tuple.
+
+
+  ## Examples
+
+  iex> require Coerce
+  iex> Coerce.defcoercion(Integer, Float) do
+  iex>   def coerce(int, float) do
+  iex>     {int + 0.0, float}
+  iex>   end
+  iex> end
+  iex> Coerce.coerce(1, 2.3)
+  {1.0, 2.3}
+  iex> Coerce.coerce(1.4, 42)
+  {1.4, 42.0}
+
+
+  iex> require Coerce
+  iex> Coerce.defcoercion(BitString, Atom) do
+  iex>   def coerce(str, atom) do
+  iex>     {str, inspect(atom)}
+  iex>   end
+  iex> end
+  iex> Coerce.coerce("foo", Bar)
+  {"foo", "Bar"}
+  iex> Coerce.coerce("baz", :qux)
+  {"baz", ":qux"}
+
+  """
+  @spec coerce(a, b) :: {a, a} | {b, b} when a: any, b: any
+  def coerce(a, b)
+
   def coerce(a = %a_mod{}, b = %a_mod{}) do
     {a, b}
   end
@@ -52,17 +88,8 @@ defmodule Coerce do
   Define a coercion between two data types.
 
   Expects two module names as the first two arguments and a `do`-block as third argument.
+  A `Coerc.CompileError` will be raised at compile-time if the coercion macro is called improperly.
 
-  ## Examples
-
-      iex> require Coerce
-      iex> Coerce.defcoercion(Integer, Float) do
-      iex>   def coerce(int, float) do
-      iex>     {int + 0.0, float}
-      iex>   end
-      iex> end
-      iex> Coerce.coerce(1, 2.3)
-      {1.0, 2.3}
   """
   defmacro defcoercion(first_module, second_module, [do: block]) do
     first_module = Macro.expand_once(first_module, __CALLER__)
