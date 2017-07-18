@@ -48,22 +48,38 @@ defmodule Coerce do
     end
   end
 
-  defmodule Behaviour do
-    @callback coerce(a, b) :: {a, a} when a: any, b: any
-  end
+  @doc """
+  Define a coercion between two data types.
 
-  defmodule Implementations do
-  end
+  Expects two module names as the first two arguments and a `do`-block as third argument.
 
+  ## Examples
+
+      iex> require Coerce
+      iex> Coerce.defcoercion(Integer, Float) do
+      iex>   def coerce(int, float) do
+      iex>     {int + 0.0, float}
+      iex>   end
+      iex> end
+      iex> Coerce.coerce(1, 2.3)
+      {1.0, 2.3}
+  """
   defmacro defcoercion(first_module, second_module, [do: block]) do
-    primary_module = Module.concat([Coerce.Implementations, Macro.expand_once(first_module, __CALLER__), Macro.expand_once(second_module, __CALLER__)])
-    secondary_module = Module.concat([Coerce.Implementations, Macro.expand_once(second_module, __CALLER__), Macro.expand_once(first_module, __CALLER__)])
-    res = quote do
+    first_module = Macro.expand_once(first_module, __CALLER__)
+    second_module = Macro.expand_once(second_module, __CALLER__)
+
+    unless is_atom(first_module) && is_atom(second_module) do
+      raise Coerce.CompileError, "`Coerce.defcoercion` called with improper arguments. Expects #{inspect(first_module)} and #{inspect(second_module)} to be module names."
+    end
+    primary_module = Module.concat([Coerce.Implementations, first_module, second_module])
+    secondary_module = Module.concat([Coerce.Implementations, second_module, first_module])
+
+    quote do
       defmodule unquote(primary_module) do
         unquote(block)
       end
       unless function_exported?(unquote(primary_module), :coerce, 2) do
-        raise "Error: `Coerce.defcoercion` implementation does not implement `coerce/2`."
+        raise Coerce.CompileError, "`Coerce.defcoercion` implementation does not implement `coerce/2`."
       end
 
       defmodule unquote(secondary_module) do
@@ -73,8 +89,5 @@ defmodule Coerce do
         end
       end
     end
-    IO.puts(Macro.to_string(res))
-    res
   end
-  defmacro defcoercion(_, _, _), do: raise "Error: `Coerce.defcoercion` called with improper parameters."
 end
