@@ -4,7 +4,7 @@ defmodule Coerce.Mixfile do
   def project do
     [
       app: :coerce,
-      version: "0.1.0",
+      version: "1.0.0",
       elixir: "~> 1.3",
       start_permanent: Mix.env == :prod,
       build_embedded: Mix.env == :prod,
