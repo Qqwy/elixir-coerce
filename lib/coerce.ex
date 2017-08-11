@@ -112,6 +112,7 @@ defmodule Coerce do
 
     quote do
       defmodule unquote(primary_module) do
+        @moduledoc false
         unquote(block)
       end
       unless function_exported?(unquote(primary_module), :coerce, 2) do
@@ -119,6 +120,7 @@ defmodule Coerce do
       end
 
       defmodule unquote(secondary_module) do
+        @moduledoc false
         def coerce(lhs, rhs) do
           {rhs, lhs} = unquote(primary_module).coerce(rhs, lhs)
           {lhs, rhs}

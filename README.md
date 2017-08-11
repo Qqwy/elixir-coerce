@@ -63,3 +63,7 @@ end
 Documentation can
 be found at [https://hexdocs.pm/coerce](https://hexdocs.pm/coerce).
 
+## Changelog
+
+- 1.0.1 - Coercion implementation modules no longer show up in generated documentation.
+- 1.0.0 - First feature-complete stable release
