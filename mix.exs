@@ -12,7 +12,7 @@ defmodule Coerce.Mixfile do
       description: description(),
       package: package(),
       name: "Coerce",
-      source_url: "https://gitub.com/Qqwy/elixir-coerce"
+      source_url: "https://github.com/Qqwy/elixir-coerce"
     ]
   end
 
