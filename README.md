@@ -55,7 +55,7 @@ by adding `coerce` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:coerce, "~> 1.0.0"}
+    {:coerce, "~> 1.0"}
   ]
 end
 ```
