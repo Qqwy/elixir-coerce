@@ -115,6 +115,9 @@ defmodule Coerce do
         @moduledoc false
         unquote(block)
       end
+
+      Code.ensure_compiled!(unquote(primary_module))
+
       unless function_exported?(unquote(primary_module), :coerce, 2) do
         raise Coerce.CompileError, "`Coerce.defcoercion` implementation does not implement `coerce/2`."
       end
