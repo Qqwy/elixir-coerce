@@ -64,5 +64,6 @@ be found at [https://hexdocs.pm/coerce](https://hexdocs.pm/coerce).
 
 ## Changelog
 
+- 1.0.2 - Ensure the library also functions correctly in Elixir v1.19.x and above. C.f. [PR #43](https://github.com/Qqwy/elixir-coerce/pull/43). Thank you, @ypconstante!
 - 1.0.1 - Coercion implementation modules no longer show up in generated documentation.
 - 1.0.0 - First feature-complete stable release
